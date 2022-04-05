@@ -19,14 +19,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.blogpessoal.model.Postagem;
 import com.generation.blogpessoal.repository.PostagemRepository;
+import com.generation.blogpessoal.repository.TemaRepository;
 
+
+/* A anotação abaixo indica que a classe é responsável por responder todas as
+ requisições http enviadas para um endereço que será definido na anotação
+ @RequestMapping */
 @RestController
+/*A anotação abaixo: indica o endereço que a
+ *  controladora responderá as requisições */
 @RequestMapping("/postagens")
+/* A anotação @CrossOrigin("*", allowedHeaders = "*")): indica que a classe controladora permitirá o 
+* recebimento de requisições realizadas de fora do domínio(localhost) ao qual 
+* ela pertence. Essa anotação é essencial para que o front-end  possa consumir a API).
+* Em produção o * asteristico é subistituido pelo endereço de dominio*/
 @CrossOrigin(origins = "*",allowedHeaders = "*")
 public class PostagemController {
 	
+	/*a anotação abaixo é usada para injeção de dependencia */
 	@Autowired
 	private PostagemRepository postagemRepository;
+	
+	@Autowired
+	private TemaRepository temaRepository;
 	
 	@GetMapping
 	public ResponseEntity <List<Postagem>> getAll(){
@@ -50,18 +65,29 @@ public class PostagemController {
 	
 	@PostMapping
 	public ResponseEntity <Postagem> postPostagem(@Valid @RequestBody Postagem postagem){
-		return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
+		if (temaRepository.existsById(postagem.getTema().getId()))
+			return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
+	
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
 	@PutMapping
 	public ResponseEntity<Postagem> putPostagem (@Valid @RequestBody Postagem postagem){
-		return postagemRepository.findById(postagem.getId())
-			.map(resposta -> ResponseEntity.ok().body(postagemRepository.save(postagem)))
-			.orElse(ResponseEntity.notFound().build());
+		if (postagemRepository.existsById(postagem.getId())){
+			
+			if (temaRepository.existsById(postagem.getTema().getId()))
+				return ResponseEntity.status(HttpStatus.OK)
+						.body(postagemRepository.save(postagem));
+			
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			
+		}			
+			
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deletePostagem(@PathVariable long id) {
+	public ResponseEntity<Object> deletePostagem(@PathVariable Long id) {
 		return postagemRepository.findById(id)
 				.map(resposta -> {
 					postagemRepository.deleteById(id);
