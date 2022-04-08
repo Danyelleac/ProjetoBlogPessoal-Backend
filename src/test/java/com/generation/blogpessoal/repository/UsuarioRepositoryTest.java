@@ -49,6 +49,15 @@ public class UsuarioRepositoryTest {
 		Optional<Usuario> usuario = usuarioRepository.findByUsuario("joao@email.com.br");
 		assertTrue(usuario.get().getUsuario().equals("joao@email.com.br"));
 	}
+	
+	@Test
+	@DisplayName("Retorna 1 usuario")
+	public void deveRetornarUmId() {
+
+		Optional<Usuario> usuario = usuarioRepository.findByUsuario("joao@email.com.br");
+		assertTrue(usuario.get().getUsuario().equals("joao@email.com.br"));
+	}
+
 
 	@Test
 	@DisplayName("Retorna 3 usuarios")

@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.generation.blogpessoal.model.Usuario;
+import com.generation.blogpessoal.model.UsuarioLogin;
 import com.generation.blogpessoal.repository.UsuarioRepository;
 import com.generation.blogpessoal.service.UsuarioService;
 
@@ -121,5 +122,41 @@ public class UsuarioControllerTest {
 
 		assertEquals(HttpStatus.OK, resposta.getStatusCode());
 	}
+    @Test
+    @Order(5)
+    @DisplayName("Listar um usuario específico por id")
+    public void deveMostrarUsuarioPorId() {
+
+        Optional<Usuario> buscarUsuario = usuarioService.cadastrarUsuario(new Usuario(0L,
+                "Sabrina Sanches", "sabrina_sanches@email.com.br",
+                "sabrina123", "https://i.imgur.com/5M2p5Wb.jpg"));
+
+        ResponseEntity<String> resposta = testRestTemplate
+                .withBasicAuth("root", "root")
+                .exchange("/usuarios/" + buscarUsuario.get().getId(), HttpMethod.GET, null, String.class);
+
+        assertEquals(HttpStatus.OK, resposta.getStatusCode());
+
+    }
+
+    @Test
+    @Order(6)
+    @DisplayName("Login do usuario funcionando")
+    public void autenticarLoginUsuario() {
+
+        usuarioService.cadastrarUsuario(new Usuario(0L,
+                "Juliana Andrews", "juliana_andrews@email.com.br",
+                "juliana123", "https://i.imgur.com/yDRVeK7.jpg"));
+
+        HttpEntity<UsuarioLogin> requisicao = new HttpEntity<UsuarioLogin>(new UsuarioLogin(0L,
+                "", "juliana_andrews@email.com.br",
+                "juliana123", ""));
+
+        ResponseEntity<UsuarioLogin> resposta = testRestTemplate
+                .exchange("/usuarios/logar", HttpMethod.POST, requisicao, UsuarioLogin.class);
+
+        assertEquals(HttpStatus.OK, resposta.getStatusCode());
+    }
+
 
 }
