@@ -1,4 +1,4 @@
-👉🏽🛠⚠ em contrução
+👉🏽🛠⚠ em construção
 <!--👉🏽🛠⚠ em contrução
 ✋🏽❌⛔parado
 👍🏽✔🟢concluído-->
