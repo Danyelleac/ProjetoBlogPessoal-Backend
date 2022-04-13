@@ -1,12 +1,5 @@
 package com.generation.blogpessoal.security;
-//quem vai definir 
-//web .. é ela onde vc vai definir a configuração geral da segurança 
-//@enable é para ativar a segurança 
-//Autowired, userDaitlService - é uma injeção de dependencia que é quando a gente transfere a resposa para o spring 
-//override ele ta dizendo que vai autenticar udando a implementação de user dataiil service
-//auth. inMemoryAuthentication tambem há autenticação em memoria qcriando um usuario teste para que os mentores testem
-//@bean-tipo de injeção de dependencia que fuciona em qualquer lugar da minha aplicação aqui nessas chaves é definido qual o algoritimo de criptografia vamos usa ,
-//override- é onde definimos oque vamos precisar para liberar o user
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;

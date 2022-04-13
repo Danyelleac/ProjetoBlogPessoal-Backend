@@ -1,9 +1,5 @@
 package com.generation.blogpessoal.model;
 
-//aqui ela não tem só atributos, não tem anotação nenhuma que não 
-//vai gerar tabela no banco, é uma tabela auxioliar que vai me ajudar 
-//a comparar a senha que eu digitei com os dados do banco ,dentro dela tem o token
-
 public class UsuarioLogin {
 
 	private Long id;

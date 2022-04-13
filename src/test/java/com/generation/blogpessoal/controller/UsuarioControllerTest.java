@@ -41,7 +41,7 @@ public class UsuarioControllerTest {
 	
 	@BeforeAll
 	void start(){
-		//limpa o banco em memória
+		
 		usuarioRepository.deleteAll();
 	}
 
@@ -49,16 +49,14 @@ public class UsuarioControllerTest {
 	@Order(1)
 	@DisplayName("Cadastrar Um Usuário")
 	public void deveCriarUmUsuario() {
-		//estou criando um objeto da classe Http que é o corpo da requisição
+		
 		HttpEntity<Usuario> requisicao = new HttpEntity<Usuario>(new Usuario(0L, 
 			"Paulo Antunes", "paulo_antunes@email.com.br", "13465278", "https://i.imgur.com/JR7kUFU.jpg"));
-		//receber a resposta
 		ResponseEntity<Usuario> resposta = testRestTemplate
 			.exchange("/usuarios/cadastrar", HttpMethod.POST, requisicao, Usuario.class);
-		//aqui eu faço a pergunta se é verdade que foi criada a requisição
-		assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
-		assertEquals(requisicao.getBody().getNome(), resposta.getBody().getNome());
-		assertEquals(requisicao.getBody().getUsuario(), resposta.getBody().getUsuario());
+				assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
+				assertEquals(requisicao.getBody().getNome(), resposta.getBody().getNome());
+				assertEquals(requisicao.getBody().getUsuario(), resposta.getBody().getUsuario());
 	}
 
 	@Test
@@ -82,11 +80,11 @@ public class UsuarioControllerTest {
 	@Order(3)
 	@DisplayName("Alterar um Usuário")
 	public void deveAtualizarUmUsuario() {
-		//criando novo user
+		
 		Optional<Usuario> usuarioCreate = usuarioService.cadastrarUsuario(new Usuario(0L, 
 			"Juliana Andrews", "juliana_andrews@email.com.br", 
 			"juliana123", "https://i.imgur.com/yDRVeK7.jpg"));
-		//Atualizando User
+		
 		Usuario usuarioUpdate = new Usuario(usuarioCreate.get().getId(), 
 			"Juliana Andrews Ramos", "juliana_ramos@email.com.br", 
 			"juliana123", "https://i.imgur.com/yDRVeK7.jpg");

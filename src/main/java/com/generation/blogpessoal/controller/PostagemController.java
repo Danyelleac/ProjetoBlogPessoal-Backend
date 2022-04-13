@@ -22,21 +22,11 @@ import com.generation.blogpessoal.repository.PostagemRepository;
 import com.generation.blogpessoal.repository.TemaRepository;
 
 
-/* A anotação abaixo indica que a classe é responsável por responder todas as
- requisições http enviadas para um endereço que será definido na anotação
- @RequestMapping */
 @RestController
-/*A anotação abaixo: indica o endereço que a
- *  controladora responderá as requisições */
 @RequestMapping("/postagens")
-/* A anotação @CrossOrigin("*", allowedHeaders = "*")): indica que a classe controladora permitirá o 
-* recebimento de requisições realizadas de fora do domínio(localhost) ao qual 
-* ela pertence. Essa anotação é essencial para que o front-end  possa consumir a API).
-* Em produção o * asteristico é subistituido pelo endereço de dominio*/
 @CrossOrigin(origins = "*",allowedHeaders = "*")
 public class PostagemController {
 	
-	/*a anotação abaixo é usada para injeção de dependencia */
 	@Autowired
 	private PostagemRepository postagemRepository;
 	

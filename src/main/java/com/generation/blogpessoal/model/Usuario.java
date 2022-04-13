@@ -41,13 +41,9 @@ public class Usuario {
 	private String foto;
 	
 	
-	//aqui pe onde faz o relacionament com postagem
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties("usuario")
-	//há uma relação com postagem para saber qual o user que fez a postade,m
 	private List<Postagem> postagem;
-	
-	//Construtor com parâmetros-serve para fazer os testes
 	
 	public Usuario(Long id, String nome, String usuario, String senha, String foto) {
 		this.id = id;
@@ -57,7 +53,6 @@ public class Usuario {
 		this.foto = foto;
 	}
 	
-	//Construtor vazio-serve para criar um objeto nulo, que serve para testar se eu consigo enviar todas as informaçõe nulas 
 	public Usuario() { }
 
 	public Long getId() {

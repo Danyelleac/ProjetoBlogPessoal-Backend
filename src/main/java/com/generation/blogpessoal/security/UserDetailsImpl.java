@@ -1,5 +1,5 @@
 package com.generation.blogpessoal.security;
-//aqui é onde esta os direitos de acesso oque ele pode ou não pode fazer
+
 import java.util.Collection;
 import java.util.List;
 
@@ -15,7 +15,6 @@ public class UserDetailsImpl implements UserDetails {
 	private String password;
 	private List<GrantedAuthority> authorities;
 
-	//esse é o construtor que a gente usa no details service
 	public UserDetailsImpl(Usuario usuario) {
 		this.userName = usuario.getUsuario();
 		this.password = usuario.getSenha();
@@ -24,7 +23,6 @@ public class UserDetailsImpl implements UserDetails {
 	public UserDetailsImpl() {
 	}
 
-	//vai pegar as altorizações , como não implementou autorização então ele pega tudo
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
@@ -41,13 +39,12 @@ public class UserDetailsImpl implements UserDetails {
 		return userName;
 	}
 
-	//a conta não espira
+	
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
-	//a conta não bloqueia
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
